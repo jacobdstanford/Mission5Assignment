@@ -1,0 +1,55 @@
+@{
+    ViewBag.Title = "Calculator";
+}
+
+<h2>Distance Running Tutoring Cost Calculator</h2>
+
+<div>
+    <label for="hoursNeeded">Hours Needed:</label>
+    <input id="hoursNeeded" type="number" min="1" value="1" />
+</div>
+
+<div>
+    <label for="rate">Rate (per hour):</label>
+    <input id="rate" type="text" value="60" readonly />
+</div>
+
+<div>
+    <button id="calcBtn">Calculate Total</button>
+</div>
+
+<div>
+    <label for="totalCost">Total Cost:</label>
+    <input id="totalCost" type="text" readonly />
+</div>
+
+<p><a asp-controller="Home" asp-action="Index">Back to Home</a></p>
+
+@section Scripts {
+    <!-- If you didn't include jQuery in the layout, you need it here:
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    -->
+    <script>
+        $(document).ready(function() {
+            $("#calcBtn").click(function() {
+                // Get hours input
+                let hours = parseFloat($("#hoursNeeded").val());
+                
+                // Validate hours
+                if (isNaN(hours) || hours <= 0) {
+                    alert("Please enter a valid positive number of hours.");
+                    return;
+                }
+                
+                // Get rate
+                let rate = parseFloat($("#rate").val());
+
+                // Calculate total
+                let total = hours * rate;
+
+                // Display total
+                $("#totalCost").val("$" + total.toFixed(2));
+            });
+        });
+    </script>
+}
